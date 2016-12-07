@@ -1,3 +1,85 @@
 //抽象数据类型Triplet的表示和实现
 //-----采用动态分配的顺序存储结构-----
 typedef ElemType *Triplet;	//由InitTriplet分配3个元素存储空间
+//-----基本操作的函数原型说明-----
+Status InitTriplet(Triplet &T,ElemType v1,ElemType v2,ElemType v3);
+	//操作结果：构造了三元组T，元素e1,e2,e3分别别赋予参数v1,v2,v3
+Status DestroyTriplet(Triplet &T);
+	//操作结果：三元组T被销毁
+Status Get(Triplet T,int i,ElemType &e);
+	//初始条件：三元组T已存在，1<=i<=3
+	//操作结果：用e返回T的第i元的值
+Status Put(Triplet &T,int i,ElemType e);
+	//初始条件：三元组T已存在，1<=i<=3
+	//操作结果：改变T的第i元的值为e
+Status IsAscending(Triplet T);
+	//初始条件：三元组T已存在
+	//操作结果：如果T的3个元素按升序排列，则返回1,否则返回0
+Status IsDescending(Triplet T);
+	//初始条件：三元组T已存在
+	//操作结果：如果T的3个元素按降序排列，则返回1,否则返回0
+Status Max(Triplet T,ElemType &e);
+	//初始条件：三元组T已存在
+	//操作结果：用e返回T的3个元素中的最大值
+Status Min(Triplet T,ElemType &e);
+	//初始条件：三元组T已存在
+	//操作结果：用e返回T的3个元素中的最小值
+
+//-----基本操作的实现-----
+Status InitTriplet(Triplet &T,ElemType v1,ElemType v2,ElemType v3)
+{	//构造三元组T，依次置T的3元素的初值为v1,v2,v3
+	T=(ElemType *)malloc(3*sizeof(ElemType));	//分配3个元素的存储空间
+	if(!T) exit(OVERFLOW);	//分配存储空间失败
+	T[0]=v1;
+	T[1]=v2;
+	T[2]=v3;
+	return OK;
+} //InitTriplet
+
+Status DestroyTriplet(Triplet &T)
+{	//销毁三元组T
+	free(T);
+	T=NULL;
+	return OK;
+} //DestroyTriplet
+
+
+Status Get(Triplet T,int i,ElemType &e)
+{	//1<=i<=3,用e返回T的第i元的值
+	if(i<1 || i>3) return ERROR;
+	e=T[i-1];
+	return OK;
+} //Get
+
+Status Put(Triplet &T,int i,ElemType e)
+{	//1<=i<=3,置T的第i元的值为e
+	if(i<1 || i>3) return ERROR;
+	T[i-1]=e;
+	return OK;
+} //Put
+
+Status IsAscending(Triplet T)
+{	//如果T的3个元素按升序排列，则返回1,否则返回0
+	return (T[0]<=T[1]) && (T[1]<=T[2]);
+} //IsAscending
+
+Status IsDescending(Triplet T)
+{	//如果T的3个元素按降序排列，则返回1,否则返回0
+	return (T[0]>=T[1]) && (T[1]>=T[2]);
+} //IsDescending
+
+Status Max(Triplet T,ElemType &e)
+{	//用e返回T的3个元素中的最大值
+	e=(T[0]>=T(1)?((T[0]>=T[2])?T[0]:T[2])
+			:((T[1]>=T[2])?T[1]:T[2]);
+	return OK;
+} //Max
+
+Status Min(Triplet T,ElemType &e)
+{	//用e返回T的3个元素中的最小值
+	e=(T[0]<=T(1)?((T[0]<=T[2])?T[0]:T[2])
+			:((T[1]<=T[2])?T[1]:T[2]);
+	return OK;
+} //Min
+
+
