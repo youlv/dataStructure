@@ -1,0 +1,3 @@
+//抽象数据类型Triplet的表示和实现
+//-----采用动态分配的顺序存储结构-----
+typedef ElemType *Triplet;	//由InitTriplet分配3个元素存储空间
